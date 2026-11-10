@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "id": "qwenwork",
+  "kind": "channel",
+  "model": "qwenwork/flash",
+  "live_model": "qwenwork/flash",
+  "auth": {
+    "accessToken": "mock-qw-token",
+    "expiresAt": 2051222400,
+    "nickname": "qwenwork-mock",
+    "refreshToken": "mock-qw-rt",
+    "uid": "qwenwork-mock"
+  },
+  "account": {
+    "nickname": "qwenwork-mock",
+    "uid": "qwenwork-mock"
+  },
+  "routes": [
+    {
+      "method": "GET",
+      "path": ".*/api/v2/model/list.*",
+      "kind": "json",
+      "body": "{\"scenes\":{\"qwork\":[{\"key\":\"flash\",\"display_name\":\"Flash\",\"enable\":true,\n\t\t\"is_default\":true,\"price_factor\":1,\"max_input_tokens\":180000}]}}"
+    },
+    {
+      "method": "POST",
+      "path": ".*agent_chat_generation.*",
+      "kind": "sse_raw",
+      "body": "data: {\"body\":\"{\\\"choices\\\":[{\\\"delta\\\":{\\\"content\\\":\\\"你好，\\\"},\\\"index\\\":0}],\\\"id\\\":\\\"qw-mock\\\",\\\"model\\\":\\\"mock-flash\\\",\\\"object\\\":\\\"chat.completion.chunk\\\"}\",\"headers\":{},\"statusCodeValue\":200}\n\ndata: {\"body\":\"{\\\"choices\\\":[{\\\"delta\\\":{\\\"content\\\":\\\"我是 qwenwork \\\"},\\\"index\\\":0}],\\\"id\\\":\\\"qw-mock\\\",\\\"model\\\":\\\"mock-flash\\\",\\\"object\\\":\\\"chat.completion.chunk\\\"}\",\"headers\":{},\"statusCodeValue\":200}\n\ndata: {\"body\":\"{\\\"choices\\\":[{\\\"delta\\\":{\\\"content\\\":\\\"mock 上游。\\\"},\\\"index\\\":0}],\\\"id\\\":\\\"qw-mock\\\",\\\"model\\\":\\\"mock-flash\\\",\\\"object\\\":\\\"chat.completion.chunk\\\"}\",\"headers\":{},\"statusCodeValue\":200}\n\ndata: {\"body\":\"{\\\"choices\\\":[],\\\"id\\\":\\\"qw-mock\\\",\\\"model\\\":\\\"mock-flash\\\",\\\"object\\\":\\\"chat.completion.chunk\\\",\\\"usage\\\":{\\\"completion_tokens\\\":9,\\\"prompt_tokens\\\":12,\\\"prompt_tokens_details\\\":{\\\"cache_write_tokens\\\":2,\\\"cached_tokens\\\":4},\\\"total_tokens\\\":21}}\",\"headers\":{},\"statusCodeValue\":200}\n\ndata: {\"body\":\"{\\\"choices\\\":[{\\\"delta\\\":{},\\\"finish_reason\\\":\\\"stop\\\",\\\"index\\\":0}],\\\"id\\\":\\\"qw-mock\\\",\\\"model\\\":\\\"mock-flash\\\",\\\"object\\\":\\\"chat.completion.chunk\\\"}\",\"headers\":{},\"statusCodeValue\":200}\n"
+    },
+    {
+      "method": "POST",
+      "path": ".*deviceToken/refresh.*",
+      "kind": "json",
+      "body": "{\"token\":\"mock-qw-2\",\"device_token\":\"mock-qw-2\",\"refresh_token\":\"drt-mock-2\",\"expires_in\":7200000}"
+    },
+    {
+      "method": "GET",
+      "path": ".*/user/balance.*",
+      "kind": "json",
+      "body": "{\"balance\":100,\"data\":{\"balance\":100}}"
+    },
+    {
+      "method": "GET",
+      "path": ".*/user/info.*",
+      "kind": "json",
+      "body": "{\"user\":{\"id\":\"qwenwork-mock\",\"name\":\"qwenwork-mock\"},\"uid\":\"qwenwork-mock\"}"
+    },
+    {
+      "method": "GET",
+      "path": ".*/user/wallets.*",
+      "kind": "json",
+      "body": "{\"wallets\":[{\"balance\":100}]}"
+    }
+  ],
+  "auth_prefixes": [
+    "qwenwork"
+  ],
+  "notes": [
+    "loopback_callback（PKCE + Ory Hydra）；嵌套 SSE 信封（body 是 RawMessage）"
+  ]
+}
